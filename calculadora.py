@@ -1,3 +1,4 @@
+#Calculadora por Gabriel Álvarez
 import math
 import re
 from math import cos
@@ -5,9 +6,7 @@ from math import sin
 from math import tan
 import numpy
 
-
 #INICIO OPERACIONES
-
 #Suma
 def suma(expresion):
   divisionesPuntoCero = re.search('[.]{1}[0]+',expresion)
@@ -106,16 +105,6 @@ def residuo(expresion):
   resultado = float(resultado)%float(numeros[1])
   return resultado
 
-#Factorial
-def factorial(expresion):
-  numero = re.compile('\d+[.]*\d*',expresion)
-  resultado = 1
-  while numero > 1:
-    resultado *= numero
-    numero -= 1
-  return resultado
-
-
 #PATRONES
 
 #Patrón de suma No.1
@@ -151,10 +140,7 @@ patronDivisionEntera = re.compile('[(]{1}[d]{1}[i]{1}[v]{1}[ ]{1}\d+[.]?\d*[ ]{1
 #Patrón de Residuo No.11
 patronResiduo = re.compile('[(]{1}[%]{1}[ ]{1}\d+[.]?\d*[ ]{1}\d+[.]?\d*([ ]{1}\d+[.]?\d*)*[)]{1}')
 
-#Patrón de factorial No.12
-patronFactorial = re.compile('[(]{1}[f]{1}[a]{1}[c]{1}[t]{1}[!]{1}[ ]\d+[.]*\d*[)]{1}')
-
-#Patrón de número solo No.13
+#Patrón de número solo No.12
 patronSolo = re.compile("[(]?\d+[.]?\d*[)]?")
    
 #INICIO DE PROCESO MADRE
@@ -192,8 +178,7 @@ def procesoMadre(expresion):
     patron9 = patronTangente.search(expresion)
     patron10 = patronDivisionEntera.search(expresion)
     patron11 = patronResiduo.search(expresion)
-    patron12 = patronFactorial.search(expresion)
-    patron13 = patronSolo.fullmatch(expresion)
+    patron12 = patronSolo.fullmatch(expresion)
     
     
     #SENO
@@ -305,7 +290,7 @@ def procesoMadre(expresion):
       expresion = expresion.replace(patron2.group(),"")
 
     #Numero solo
-    elif patron13 != None:
+    elif patron12 != None:
       expresion = expresion.replace("(","")
       expresion = expresion.replace(")","")
       break
@@ -333,7 +318,6 @@ def procesoMadre(expresion):
     patron9 = patronTangente.search(expresion)
     patron10 = patronDivisionEntera.search(expresion)
     patron11 = patronResiduo.search(expresion)
-    patron12 = patronFactorial.search(expresion)
     
     if patron1 != None:
       repetir = True
@@ -359,8 +343,6 @@ def procesoMadre(expresion):
       repetir = True
     elif patron12 != None:
       repetir = True
-    elif patron13 != None:
-      repetir = True
     else:
       repetir = False
 
@@ -371,16 +353,39 @@ def procesoMadre(expresion):
 
 print("           Inicio del programa         ")
 print("Gabriel Álvarez    -   Github: galv2003")
-
+print("Escriba el comando 'help' para más información")
+print()
 #Función Principal#
 def main():
   while True:
     expresion = input("Calculadora >> ")
     if expresion == "quit":
+      print()
       print("Saliendo...")
       print("Gracias por haber usado el programa calculadora")
       break
+    elif expresion == "help":
+      print()
+      print("INSTRUCCIONES DE USO")
+      print("Al ejecutar calculadora, las operaciones se deben hacer como este ejemplo: (* 4 2) dando 8")
+      print()
+      print("Operaciones que puede utilizar")
+      print("+: suma")
+      print("-: resta")
+      print("*: multiplicación")
+      print("/: división estandar (puede retornar resultados no enteros)")
+      print("sqroot: raíz cuadrada")
+      print("sqr: exponente al cuadrado")
+      print("sen: seno de un numero")
+      print("cos: coseno de un numero")
+      print("tan: tangente de un numero")
+      print("div: división que retorna un entero omitiendo cualquier residuo")
+      print("%: operación modulo (residuo)")
+      print()
+      print("Puede escribir el comando 'quit' para abandonar el programa")
+      print()
     else:
-      print("Respuesta >> ", procesoMadre(expresion))
+      print(procesoMadre(expresion))
+      print()
 
 main()
